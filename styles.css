@@ -519,6 +519,14 @@
 
   @media (max-width: 900px) {
     nav { padding: 1.2rem 2rem; }
+    .nav-links {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a { white-space: nowrap; }
     section { padding: 5rem 2rem; }
     .hero { padding: 0 2rem; padding-top: 8rem; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
