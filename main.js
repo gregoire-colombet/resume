@@ -3,6 +3,7 @@
  * Depends on DOM IDs: #cursor, #cursor-ring, #timelineProgress
  * Depends on CSS classes: .reveal, .timeline-item, .skill-group,
  *                         .skill-item, .skill-bar-fill, .hero-content
+ *                         .nav-toggle, .nav-links
  *
  * Execution: deferred via <script defer src="main.js">
  * All selectors resolve after full DOM parse.
@@ -29,7 +30,26 @@
   }
   animCursor();
 
-  /* ── 2. Scroll-reveal for .reveal and .timeline-item ───────────── */
+  /* ── 2. Hamburger menu toggle ───────────────────────────────────── */
+  var navToggle = document.querySelector('.nav-toggle');
+  var navLinks  = document.querySelector('.nav-links');
+
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', function () {
+      var isOpen = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('open', isOpen);
+    });
+
+    /* Close menu when any nav link is tapped */
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+      });
+    });
+  }
+
+  /* ── 3. Scroll-reveal for .reveal and .timeline-item ───────────── */
   var revealObs = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -42,7 +62,7 @@
     revealObs.observe(el);
   });
 
-  /* ── 3. Skill bar animation ─────────────────────────────────────── */
+  /* ── 4. Skill bar animation ─────────────────────────────────────── */
   /**
    * getW — reads the CSS custom property --w from a .skill-bar-fill element.
    * getComputedStyle can return '' for inline custom props in some browsers,
@@ -76,7 +96,7 @@
     skillObs.observe(g);
   });
 
-  /* ── 4. Timeline progress bar ───────────────────────────────────── */
+  /* ── 5. Timeline progress bar ───────────────────────────────────── */
   var timelineWrap = document.querySelector('.timeline-wrap');
   var progressBar  = document.getElementById('timelineProgress');
 
@@ -89,9 +109,9 @@
   }
 
   window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress(); /* initial call — handles page-load scroll position */
+  updateProgress();
 
-  /* ── 5. Hero staggered entrance animation ───────────────────────── */
+  /* ── 6. Hero staggered entrance animation ───────────────────────── */
   /**
    * Each direct child of .hero-content starts invisible and slides up,
    * with a staggered delay based on its index.

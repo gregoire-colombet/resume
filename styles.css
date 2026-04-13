@@ -517,16 +517,43 @@
     opacity: 0.5; pointer-events: none; z-index: 1000;
   }
 
+  /* HAMBURGER BUTTON — hidden on desktop */
+  .nav-toggle {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    background: none; border: none; cursor: pointer;
+    padding: 4px; z-index: 101;
+  }
+  .nav-toggle span {
+    display: block; width: 24px; height: 2px;
+    background: var(--accent); border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
   @media (max-width: 900px) {
     nav { padding: 1.2rem 2rem; }
+
+    .nav-toggle { display: flex; }
+
     .nav-links {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding-bottom: 2px;
+      display: none;
+      flex-direction: column; gap: 0;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(8,12,16,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
     }
-    .nav-links::-webkit-scrollbar { display: none; }
-    .nav-links a { white-space: nowrap; }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block; padding: 0.9rem 2rem;
+      font-size: 0.8rem; white-space: nowrap;
+    }
+
     section { padding: 5rem 2rem; }
     .hero { padding: 0 2rem; padding-top: 8rem; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
