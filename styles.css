@@ -564,5 +564,6 @@
     .timeline-axis { left: 140px; }
     .timeline-item { grid-template-columns: 140px 1fr; }
     .floating-badge { display: none; }
+    .hero-scroll { display: none; }
     footer { padding: 2rem; flex-direction: column; gap: 1rem; }
   }
