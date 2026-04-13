@@ -11,24 +11,28 @@
 (function () {
   'use strict';
 
-  /* ── 1. Custom cursor ───────────────────────────────────────────── */
-  var cursorDot  = document.getElementById('cursor');
-  var cursorRing = document.getElementById('cursor-ring');
-  var mx = 0, my = 0, rx = 0, ry = 0;
+  /* ── 1. Custom cursor (hover/pointer devices only) ──────────────── */
+  var isHoverDevice = window.matchMedia('(hover: hover)').matches;
 
-  document.addEventListener('mousemove', function (e) {
-    mx = e.clientX;
-    my = e.clientY;
-  });
+  if (isHoverDevice) {
+    var cursorDot  = document.getElementById('cursor');
+    var cursorRing = document.getElementById('cursor-ring');
+    var mx = 0, my = 0, rx = 0, ry = 0;
 
-  function animCursor() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    if (cursorDot)  { cursorDot.style.left  = mx + 'px'; cursorDot.style.top  = my + 'px'; }
-    if (cursorRing) { cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px'; }
-    requestAnimationFrame(animCursor);
+    document.addEventListener('mousemove', function (e) {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+
+    function animateCursor() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      if (cursorDot)  { cursorDot.style.left  = mx + 'px'; cursorDot.style.top  = my + 'px'; }
+      if (cursorRing) { cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px'; }
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
   }
-  animCursor();
 
   /* ── 2. Hamburger menu toggle ───────────────────────────────────── */
   var navToggle = document.querySelector('.nav-toggle');

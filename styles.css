@@ -41,6 +41,11 @@
   }
   body:hover #cursor { opacity: 1; }
 
+  @media (hover: none) {
+    #cursor, #cursor-ring { display: none; }
+    body { cursor: auto; }
+  }
+
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
